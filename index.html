@@ -22,39 +22,5 @@
 
         <h2>📱 Download APK</h2>
         <a href="myapp.apk" download>Download APK</a>
-
-        <h2>🔗 Backend Test - Encode</h2>
-        <input
-            type="text"
-            id="messageInput"
-            placeholder="Enter message"
-            style="padding: 5px"
-        />
-        <button onclick="callBackend()" style="padding: 5px">
-            Call Backend
-        </button>
-        <div id="result" style="margin-top: 10px; color: green"></div>
-
-        <script>
-            function callBackend() {
-                const message = document.getElementById("messageInput").value;
-                fetch("http://35.159.81.140:8000/encode", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    body: "message=" + encodeURIComponent(message),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        document.getElementById("result").innerText =
-                            JSON.stringify(data);
-                    })
-                    .catch((error) => {
-                        document.getElementById("result").innerText =
-                            "Error: " + error;
-                    });
-            }
-        </script>
     </body>
 </html>
