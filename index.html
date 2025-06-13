@@ -3,70 +3,439 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Generative Image Steganography</title>
+        <title>My App - Modern Digital Experience</title>
         <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
             body {
-                font-family: Arial, sans-serif;
-                padding: 20px;
-                background-color: #f9f9f9;
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                color: #ffffff;
+                overflow-x: hidden;
             }
+
             .container {
-                max-width: 800px;
+                max-width: 1200px;
                 margin: 0 auto;
-                text-align: center;
-                background-color: #fff;
                 padding: 20px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                border-radius: 8px;
             }
-            iframe,
-            video {
+
+            .hero {
+                text-align: center;
+                padding: 60px 0;
+                position: relative;
+            }
+
+            .hero::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+                pointer-events: none;
+            }
+
+            h1 {
+                font-size: 3.5rem;
+                font-weight: 800;
+                margin-bottom: 20px;
+                background: linear-gradient(45deg, #ffffff, #f0f8ff, #e6f3ff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: fadeInUp 1s ease-out;
+                text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+                opacity: 0.9;
+                margin-bottom: 40px;
+                animation: fadeInUp 1s ease-out 0.2s both;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                gap: 30px;
+                margin-top: 60px;
+            }
+
+            .card {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 20px;
+                padding: 30px;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                position: relative;
+                overflow: hidden;
+                animation: fadeInUp 1s ease-out 0.4s both;
+            }
+
+            .card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.1),
+                    transparent
+                );
+                transition: left 0.6s;
+            }
+
+            .card:hover::before {
+                left: 100%;
+            }
+
+            .card:hover {
+                transform: translateY(-10px) scale(1.02);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+
+            .card-icon {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
                 display: block;
-                margin: 10px auto;
-                border: 1px solid #ccc;
-                border-radius: 4px;
+                animation: bounce 2s infinite;
             }
-            a {
-                display: inline-block;
-                margin: 10px 0;
-                padding: 10px 20px;
-                background-color: #007bff;
+
+            .card h2 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+                color: #ffffff;
+            }
+
+            .pdf-container {
+                position: relative;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                transition: transform 0.3s ease;
+            }
+
+            .pdf-container:hover {
+                transform: scale(1.02);
+            }
+
+            iframe {
+                width: 100%;
+                height: 500px;
+                border: none;
+                background: #ffffff;
+            }
+
+            .video-container {
+                position: relative;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+
+            video {
+                width: 100%;
+                height: auto;
+                display: block;
+                border-radius: 15px;
+            }
+
+            .download-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 12px;
+                background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
                 color: white;
                 text-decoration: none;
-                border-radius: 4px;
+                padding: 15px 30px;
+                border-radius: 50px;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+                position: relative;
+                overflow: hidden;
             }
-            a:hover {
-                background-color: #0056b3;
+
+            .download-btn::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent
+                );
+                transition: left 0.6s;
             }
-            img {
-                margin-top: 10px;
+
+            .download-btn:hover::before {
+                left: 100%;
+            }
+
+            .download-btn:hover {
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+            }
+
+            .floating-shapes {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: -1;
+            }
+
+            .shape {
+                position: absolute;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                animation: float 6s ease-in-out infinite;
+            }
+
+            .shape:nth-child(1) {
+                width: 60px;
+                height: 60px;
+                top: 20%;
+                left: 10%;
+                animation-delay: 0s;
+            }
+
+            .shape:nth-child(2) {
+                width: 40px;
+                height: 40px;
+                top: 60%;
+                right: 15%;
+                animation-delay: 2s;
+            }
+
+            .shape:nth-child(3) {
+                width: 80px;
+                height: 80px;
+                bottom: 20%;
+                left: 20%;
+                animation-delay: 4s;
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes bounce {
+                0%,
+                20%,
+                50%,
+                80%,
+                100% {
+                    transform: translateY(0);
+                }
+                40% {
+                    transform: translateY(-10px);
+                }
+                60% {
+                    transform: translateY(-5px);
+                }
+            }
+
+            @keyframes float {
+                0%,
+                100% {
+                    transform: translateY(0px) rotate(0deg);
+                }
+                50% {
+                    transform: translateY(-20px) rotate(180deg);
+                }
+            }
+
+            @media (max-width: 768px) {
+                h1 {
+                    font-size: 2.5rem;
+                }
+
+                .grid {
+                    grid-template-columns: 1fr;
+                    gap: 20px;
+                }
+
+                .card {
+                    padding: 20px;
+                }
+
+                iframe {
+                    height: 400px;
+                }
+            }
+
+            .glow {
+                position: relative;
+            }
+
+            .glow::after {
+                content: "";
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+                bottom: -2px;
+                background: linear-gradient(
+                    45deg,
+                    #ff6b6b,
+                    #4ecdc4,
+                    #45b7d1,
+                    #96ceb4,
+                    #feca57
+                );
+                border-radius: 22px;
+                z-index: -1;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+            .card:hover .glow::after {
+                opacity: 0.7;
             }
         </style>
     </head>
     <body>
-        <div class="container">
-            <h1>Generative Image Steganography</h1>
-
-            <h2>📄 View PDF</h2>
-            <iframe src="steganography poster.pdf" width="100%" height="600px">
-                This browser does not support PDFs. Please download the PDF to
-                view it: <a href="myfile.pdf">Download PDF</a>
-            </iframe>
-
-            <h2>🎬 Watch Video</h2>
-            <video width="640" height="360" controls>
-                <source src="myvideo.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
-
-            <h2>📱 Download APK</h2>
-            <a href="myapp.apk" download>Download APK</a>
-
-            <h3>📷 Or scan QR to download APK</h3>
-            <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://raw.githubusercontent.com/Steganographyproject/GenerativeImageSteganography/main/myapp.apk"
-                alt="QR Code to download APK"
-            />
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
         </div>
+
+        <div class="container">
+            <div class="hero">
+                <h1>My App Experience</h1>
+                <p class="subtitle">
+                    Discover, Watch, and Download - All in One Beautiful Place
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="card glow">
+                    <span class="card-icon">📄</span>
+                    <h2>View Interactive PDF</h2>
+                    <div class="pdf-container">
+                        <iframe
+                            src="steganography poster.pdf"
+                            title="Steganography Poster"
+                        >
+                            <p>
+                                This browser does not support PDFs. Please
+                                download the PDF to view it:
+                                <a
+                                    href="steganography poster.pdf"
+                                    style="color: #4ecdc4"
+                                    >Download PDF</a
+                                >
+                            </p>
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="card glow">
+                    <span class="card-icon">🎬</span>
+                    <h2>Watch Exclusive Video</h2>
+                    <div class="video-container">
+                        <video controls preload="metadata">
+                            <source src="myvideo.mp4" type="video/mp4" />
+                            <p>Your browser does not support the video tag.</p>
+                        </video>
+                    </div>
+                </div>
+
+                <div class="card glow">
+                    <span class="card-icon">📱</span>
+                    <h2>Get the Mobile App</h2>
+                    <p
+                        style="
+                            margin-bottom: 25px;
+                            opacity: 0.9;
+                            line-height: 1.6;
+                        "
+                    >
+                        Download our premium mobile application and enjoy the
+                        full experience on your device. Optimized for
+                        performance and designed for excellence.
+                    </p>
+                    <a href="myapp.apk" download class="download-btn">
+                        <span>📱</span>
+                        Download APK
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Add smooth scrolling and entrance animations
+            document.addEventListener("DOMContentLoaded", function () {
+                const cards = document.querySelectorAll(".card");
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animationPlayState = "running";
+                        }
+                    });
+                });
+
+                cards.forEach((card) => {
+                    observer.observe(card);
+                });
+
+                // Add interactive hover effects
+                cards.forEach((card) => {
+                    card.addEventListener("mouseenter", function () {
+                        this.style.zIndex = "10";
+                    });
+
+                    card.addEventListener("mouseleave", function () {
+                        this.style.zIndex = "1";
+                    });
+                });
+
+                // Parallax effect for floating shapes
+                document.addEventListener("mousemove", function (e) {
+                    const shapes = document.querySelectorAll(".shape");
+                    const x = e.clientX / window.innerWidth;
+                    const y = e.clientY / window.innerHeight;
+
+                    shapes.forEach((shape, index) => {
+                        const speed = (index + 1) * 0.5;
+                        shape.style.transform = `translate(${x * speed * 10}px, ${y * speed * 10}px)`;
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
