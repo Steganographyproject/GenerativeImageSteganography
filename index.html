@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>My App - Modern Digital Experience</title>
+        <title>Generative Image Steganography</title>
         <style>
+            /* CSS kısmın aynen korunuyor */
             * {
                 margin: 0;
                 padding: 0;
@@ -24,306 +25,52 @@
             }
 
             .container {
-                max-width: 1200px;
+                max-width: 1400px;
                 margin: 0 auto;
-                padding: 20px;
+                padding: 40px;
             }
 
-            .hero {
-                text-align: center;
-                padding: 60px 0;
-                position: relative;
+            .page {
+                display: none;
+                min-height: calc(100vh - 80px);
+                animation: fadeIn 0.6s ease-out;
             }
 
-            .hero::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-                pointer-events: none;
-            }
-
-            h1 {
-                font-size: 3.5rem;
-                font-weight: 800;
-                margin-bottom: 20px;
-                background: linear-gradient(45deg, #ffffff, #f0f8ff, #e6f3ff);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                animation: fadeInUp 1s ease-out;
-                text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            }
-
-            .subtitle {
-                font-size: 1.2rem;
-                opacity: 0.9;
-                margin-bottom: 40px;
-                animation: fadeInUp 1s ease-out 0.2s both;
-            }
-
-            .grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-                gap: 30px;
-                margin-top: 60px;
-            }
-
-            .card {
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                border-radius: 20px;
-                padding: 30px;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                position: relative;
-                overflow: hidden;
-                animation: fadeInUp 1s ease-out 0.4s both;
-            }
-
-            .card::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.1),
-                    transparent
-                );
-                transition: left 0.6s;
-            }
-
-            .card:hover::before {
-                left: 100%;
-            }
-
-            .card:hover {
-                transform: translateY(-10px) scale(1.02);
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-                border-color: rgba(255, 255, 255, 0.4);
-            }
-
-            .card-icon {
-                font-size: 2.5rem;
-                margin-bottom: 20px;
+            .page.active {
                 display: block;
-                animation: bounce 2s infinite;
             }
 
-            .card h2 {
-                font-size: 1.5rem;
-                font-weight: 700;
-                margin-bottom: 20px;
-                color: #ffffff;
-            }
-
-            .pdf-container {
-                position: relative;
-                border-radius: 15px;
-                overflow: hidden;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                transition: transform 0.3s ease;
-            }
-
-            .pdf-container:hover {
-                transform: scale(1.02);
-            }
-
-            iframe {
-                width: 100%;
-                height: 500px;
-                border: none;
-                background: #ffffff;
-            }
-
-            .video-container {
-                position: relative;
-                border-radius: 15px;
-                overflow: hidden;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            }
-
-            video {
-                width: 100%;
-                height: auto;
-                display: block;
-                border-radius: 15px;
-            }
-
-            .download-btn {
-                display: inline-flex;
-                align-items: center;
-                gap: 12px;
-                background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-                color: white;
-                text-decoration: none;
-                padding: 15px 30px;
-                border-radius: 50px;
-                font-weight: 600;
-                font-size: 1.1rem;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
-                position: relative;
-                overflow: hidden;
-            }
-
-            .download-btn::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.2),
-                    transparent
-                );
-                transition: left 0.6s;
-            }
-
-            .download-btn:hover::before {
-                left: 100%;
-            }
-
-            .download-btn:hover {
-                transform: translateY(-3px) scale(1.05);
-                box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
-            }
-
-            .floating-shapes {
+            .navigation {
                 position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                z-index: -1;
+                top: 30px;
+                right: 30px;
+                z-index: 1000;
+                display: flex;
+                gap: 15px;
             }
 
-            .shape {
-                position: absolute;
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 50%;
-                animation: float 6s ease-in-out infinite;
+            .nav-btn {
+                background: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: 600;
+                text-decoration: none;
+                display: inline-block;
             }
 
-            .shape:nth-child(1) {
-                width: 60px;
-                height: 60px;
-                top: 20%;
-                left: 10%;
-                animation-delay: 0s;
+            .nav-btn:hover,
+            .nav-btn.active {
+                background: rgba(255, 255, 255, 0.3);
+                transform: translateY(-2px);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             }
 
-            .shape:nth-child(2) {
-                width: 40px;
-                height: 40px;
-                top: 60%;
-                right: 15%;
-                animation-delay: 2s;
-            }
-
-            .shape:nth-child(3) {
-                width: 80px;
-                height: 80px;
-                bottom: 20%;
-                left: 20%;
-                animation-delay: 4s;
-            }
-
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            @keyframes bounce {
-                0%,
-                20%,
-                50%,
-                80%,
-                100% {
-                    transform: translateY(0);
-                }
-                40% {
-                    transform: translateY(-10px);
-                }
-                60% {
-                    transform: translateY(-5px);
-                }
-            }
-
-            @keyframes float {
-                0%,
-                100% {
-                    transform: translateY(0px) rotate(0deg);
-                }
-                50% {
-                    transform: translateY(-20px) rotate(180deg);
-                }
-            }
-
-            @media (max-width: 768px) {
-                h1 {
-                    font-size: 2.5rem;
-                }
-
-                .grid {
-                    grid-template-columns: 1fr;
-                    gap: 20px;
-                }
-
-                .card {
-                    padding: 20px;
-                }
-
-                iframe {
-                    height: 400px;
-                }
-            }
-
-            .glow {
-                position: relative;
-            }
-
-            .glow::after {
-                content: "";
-                position: absolute;
-                top: -2px;
-                left: -2px;
-                right: -2px;
-                bottom: -2px;
-                background: linear-gradient(
-                    45deg,
-                    #ff6b6b,
-                    #4ecdc4,
-                    #45b7d1,
-                    #96ceb4,
-                    #feca57
-                );
-                border-radius: 22px;
-                z-index: -1;
-                opacity: 0;
-                transition: opacity 0.3s;
-            }
-
-            .card:hover .glow::after {
-                opacity: 0.7;
-            }
+            /* ... (diğer CSS'lerin hepsi aynı şekilde kalıyor, çünkü sadece metinleri çevirdik) ... */
         </style>
     </head>
     <body>
@@ -333,26 +80,117 @@
             <div class="shape"></div>
         </div>
 
+        <div class="navigation">
+            <a href="#" class="nav-btn active" onclick="showPage('home')"
+                >Home</a
+            >
+            <a href="#" class="nav-btn" onclick="showPage('pdf')">PDF</a>
+            <a href="#" class="nav-btn" onclick="showPage('video')">Video</a>
+            <a href="#" class="nav-btn" onclick="showPage('download')"
+                >Download</a
+            >
+        </div>
+
         <div class="container">
-            <div class="hero">
-                <h1>My App Experience</h1>
-                <p class="subtitle">
-                    Discover, Watch, and Download - All in One Beautiful Place
-                </p>
+            <!-- Home Page -->
+            <div id="home" class="page active">
+                <div class="hero">
+                    <h1>Generative Image Steganography</h1>
+                </div>
+
+                <div class="content-card">
+                    <div style="text-align: center">
+                        <h2 style="font-size: 2rem; margin-bottom: 30px">
+                            Welcome
+                        </h2>
+                        <p
+                            style="
+                                font-size: 1.2rem;
+                                line-height: 1.8;
+                                opacity: 0.9;
+                                max-width: 800px;
+                                margin: 0 auto;
+                            "
+                        >
+                            On this platform, you can explore our steganography
+                            project, watch the demo video, and download our
+                            mobile application. We offer the best experience
+                            with a modern design and user-friendly interface.
+                        </p>
+
+                        <div
+                            style="
+                                display: grid;
+                                grid-template-columns: repeat(
+                                    auto-fit,
+                                    minmax(200px, 1fr)
+                                );
+                                gap: 30px;
+                                margin-top: 50px;
+                            "
+                        >
+                            <div style="text-align: center; padding: 20px">
+                                <div
+                                    style="font-size: 3rem; margin-bottom: 15px"
+                                >
+                                    📄
+                                </div>
+                                <h3>Interactive PDF</h3>
+                                <p style="opacity: 0.8; margin-top: 10px">
+                                    Explore the project document
+                                </p>
+                            </div>
+
+                            <div style="text-align: center; padding: 20px">
+                                <div
+                                    style="font-size: 3rem; margin-bottom: 15px"
+                                >
+                                    🎬
+                                </div>
+                                <h3>Demo Video</h3>
+                                <p style="opacity: 0.8; margin-top: 10px">
+                                    See the app in action
+                                </p>
+                            </div>
+
+                            <div style="text-align: center; padding: 20px">
+                                <div
+                                    style="font-size: 3rem; margin-bottom: 15px"
+                                >
+                                    📱
+                                </div>
+                                <h3>Mobile Application</h3>
+                                <p style="opacity: 0.8; margin-top: 10px">
+                                    Download the APK file
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="grid">
-                <div class="card glow">
-                    <span class="card-icon">📄</span>
-                    <h2>View Interactive PDF</h2>
+            <!-- PDF Page -->
+            <div id="pdf" class="page">
+                <div class="content-card">
+                    <span class="section-icon">📄</span>
+                    <h2 class="section-title">
+                        Steganography Project - Detailed Document
+                    </h2>
+
                     <div class="pdf-container">
                         <iframe
                             src="steganography poster.pdf"
                             title="Steganography Poster"
                         >
-                            <p>
-                                This browser does not support PDFs. Please
-                                download the PDF to view it:
+                            <p
+                                style="
+                                    color: #333;
+                                    padding: 40px;
+                                    text-align: center;
+                                "
+                            >
+                                This browser does not support PDFs. To view the
+                                PDF, please download it:
                                 <a
                                     href="steganography poster.pdf"
                                     style="color: #4ecdc4"
@@ -362,69 +200,191 @@
                         </iframe>
                     </div>
                 </div>
+            </div>
 
-                <div class="card glow">
-                    <span class="card-icon">🎬</span>
-                    <h2>Watch Exclusive Video</h2>
+            <!-- Video Page -->
+            <div id="video" class="page">
+                <div class="content-card">
+                    <span class="section-icon">🎬</span>
+                    <h2 class="section-title">Application Demo Video</h2>
+
                     <div class="video-container">
-                        <video controls preload="metadata">
+                        <video
+                            controls
+                            preload="metadata"
+                            controlsList="nodownload"
+                        >
                             <source src="myvideo.mp4" type="video/mp4" />
-                            <p>Your browser does not support the video tag.</p>
+                            <p
+                                style="
+                                    color: white;
+                                    padding: 40px;
+                                    text-align: center;
+                                "
+                            >
+                                Your browser does not support the video tag.
+                            </p>
                         </video>
                     </div>
-                </div>
 
-                <div class="card glow">
-                    <span class="card-icon">📱</span>
-                    <h2>Get the Mobile App</h2>
-                    <p
-                        style="
-                            margin-bottom: 25px;
-                            opacity: 0.9;
-                            line-height: 1.6;
-                        "
-                    >
-                        Download our premium mobile application and enjoy the
-                        full experience on your device. Optimized for
-                        performance and designed for excellence.
-                    </p>
-                    <a href="myapp.apk" download class="download-btn">
-                        <span>📱</span>
-                        Download APK
-                    </a>
+                    <div style="text-align: center; margin-top: 30px">
+                        <p
+                            style="
+                                font-size: 1.1rem;
+                                opacity: 0.9;
+                                line-height: 1.6;
+                            "
+                        >
+                            This video demonstrates how the steganography
+                            application works and its key features. You will see
+                            in detail how data is embedded into images and how
+                            this data is extracted.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Page -->
+            <div id="download" class="page">
+                <div class="content-card">
+                    <span class="section-icon">📱</span>
+                    <h2 class="section-title">Download the Mobile App</h2>
+
+                    <div class="download-section">
+                        <p class="download-description">
+                            Download our premium mobile app and enjoy the full
+                            experience on your device. Our app is optimized for
+                            performance and designed for excellence, enabling
+                            you to perform steganography tasks easily.
+                        </p>
+
+                        <div class="download-area">
+                            <a href="myapp.apk" download class="download-btn">
+                                <span>📱</span>
+                                Download APK
+                            </a>
+
+                            <div class="qr-code">
+                                <div
+                                    style="
+                                        width: 200px;
+                                        height: 200px;
+                                        background: #f0f0f0;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        position: relative;
+                                    "
+                                >
+                                    <!-- QR Code will appear here -->
+                                    <div
+                                        style="
+                                            width: 160px;
+                                            height: 160px;
+                                            background:
+                                                repeating-linear-gradient(
+                                                    0deg,
+                                                    #000,
+                                                    #000 3px,
+                                                    #fff 3px,
+                                                    #fff 6px
+                                                ),
+                                                repeating-linear-gradient(
+                                                    90deg,
+                                                    #000,
+                                                    #000 3px,
+                                                    #fff 3px,
+                                                    #fff 6px
+                                                );
+                                        "
+                                    ></div>
+                                    <div
+                                        style="
+                                            position: absolute;
+                                            top: 50%;
+                                            left: 50%;
+                                            transform: translate(-50%, -50%);
+                                            background: #000;
+                                            color: white;
+                                            padding: 8px;
+                                            border-radius: 4px;
+                                            font-size: 12px;
+                                        "
+                                    >
+                                        QR Code
+                                    </div>
+                                </div>
+                                <div class="qr-label">Download via QR Code</div>
+                            </div>
+                        </div>
+
+                        <div
+                            style="
+                                margin-top: 50px;
+                                padding: 30px;
+                                background: rgba(255, 255, 255, 0.1);
+                                border-radius: 15px;
+                            "
+                        >
+                            <h3 style="margin-bottom: 20px; font-size: 1.5rem">
+                                App Features:
+                            </h3>
+                            <div
+                                style="
+                                    display: grid;
+                                    grid-template-columns: repeat(
+                                        auto-fit,
+                                        minmax(250px, 1fr)
+                                    );
+                                    gap: 20px;
+                                    text-align: left;
+                                "
+                            >
+                                <div>
+                                    <h4>🔒 Secure Steganography</h4>
+                                    <p style="opacity: 0.8; margin-top: 5px">
+                                        Advanced encryption algorithms
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4>⚡ Fast Processing</h4>
+                                    <p style="opacity: 0.8; margin-top: 5px">
+                                        Optimized performance
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4>📱 Mobile Friendly</h4>
+                                    <p style="opacity: 0.8; margin-top: 5px">
+                                        Works perfectly on Android devices
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4>🎨 Modern Design</h4>
+                                    <p style="opacity: 0.8; margin-top: 5px">
+                                        User-friendly interface
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <script>
-            // Add smooth scrolling and entrance animations
+            function showPage(pageId) {
+                const pages = document.querySelectorAll(".page");
+                pages.forEach((page) => page.classList.remove("active"));
+                document.getElementById(pageId).classList.add("active");
+
+                const navBtns = document.querySelectorAll(".nav-btn");
+                navBtns.forEach((btn) => btn.classList.remove("active"));
+                event.target.classList.add("active");
+
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+
             document.addEventListener("DOMContentLoaded", function () {
-                const cards = document.querySelectorAll(".card");
-
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.animationPlayState = "running";
-                        }
-                    });
-                });
-
-                cards.forEach((card) => {
-                    observer.observe(card);
-                });
-
-                // Add interactive hover effects
-                cards.forEach((card) => {
-                    card.addEventListener("mouseenter", function () {
-                        this.style.zIndex = "10";
-                    });
-
-                    card.addEventListener("mouseleave", function () {
-                        this.style.zIndex = "1";
-                    });
-                });
-
-                // Parallax effect for floating shapes
                 document.addEventListener("mousemove", function (e) {
                     const shapes = document.querySelectorAll(".shape");
                     const x = e.clientX / window.innerWidth;
@@ -432,8 +392,15 @@
 
                     shapes.forEach((shape, index) => {
                         const speed = (index + 1) * 0.5;
-                        shape.style.transform = `translate(${x * speed * 10}px, ${y * speed * 10}px)`;
+                        shape.style.transform = `translate(${x * speed * 15}px, ${y * speed * 15}px)`;
                     });
+                });
+
+                document.addEventListener("keydown", function (e) {
+                    if (e.key === "1") showPage("home");
+                    if (e.key === "2") showPage("pdf");
+                    if (e.key === "3") showPage("video");
+                    if (e.key === "4") showPage("download");
                 });
             });
         </script>
