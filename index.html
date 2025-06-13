@@ -383,6 +383,65 @@
                 line-height: 1.5;
             }
 
+            /* Team section */
+            .team-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+                margin-top: 40px;
+            }
+
+            .team-member {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 30px;
+                border-radius: 20px;
+                text-align: center;
+                transition: all 0.3s ease;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .team-member:hover {
+                transform: translateY(-5px);
+                background: rgba(255, 255, 255, 0.15);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            }
+
+            .team-member .avatar {
+                width: 100px;
+                height: 100px;
+                background: linear-gradient(45deg, #10b981, #059669);
+                border-radius: 50%;
+                margin: 0 auto 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2.5rem;
+                color: white;
+                font-weight: bold;
+            }
+
+            .team-member h3 {
+                font-size: 1.3rem;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+
+            .team-member .role {
+                color: #fbbf24;
+                font-weight: 500;
+                font-size: 1rem;
+                opacity: 0.9;
+            }
+
+            .supervisor {
+                background: rgba(255, 187, 36, 0.1);
+                border: 1px solid rgba(255, 187, 36, 0.3);
+            }
+
+            .supervisor .avatar {
+                background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            }
+
             /* Responsive design */
             @media (max-width: 768px) {
                 .navigation {
@@ -391,11 +450,13 @@
                     right: 50%;
                     transform: translateX(50%);
                     top: auto;
+                    flex-wrap: wrap;
+                    max-width: 90vw;
                 }
 
                 .nav-btn {
-                    padding: 10px 15px;
-                    font-size: 12px;
+                    padding: 8px 12px;
+                    font-size: 11px;
                 }
 
                 .hero {
@@ -412,7 +473,8 @@
                     gap: 30px;
                 }
 
-                .feature-grid {
+                .feature-grid,
+                .team-grid {
                     grid-template-columns: 1fr;
                     gap: 20px;
                 }
@@ -428,14 +490,17 @@
             <a href="#" class="nav-btn active" onclick="showPage('home')">
                 <i class="fas fa-home"></i> Home
             </a>
-            <a href="#" class="nav-btn" onclick="showPage('pdf')">
-                <i class="fas fa-file-pdf"></i> PDF
+            <a href="#" class="nav-btn" onclick="showPage('poster')">
+                <i class="fas fa-file-pdf"></i> Poster
             </a>
-            <a href="#" class="nav-btn" onclick="showPage('video')">
-                <i class="fas fa-play"></i> Video
+            <a href="#" class="nav-btn" onclick="showPage('demo')">
+                <i class="fas fa-play"></i> Demo
             </a>
             <a href="#" class="nav-btn" onclick="showPage('download')">
                 <i class="fas fa-download"></i> Download
+            </a>
+            <a href="#" class="nav-btn" onclick="showPage('team')">
+                <i class="fas fa-users"></i> Team
             </a>
         </nav>
 
@@ -445,8 +510,9 @@
                 <div class="hero">
                     <h1>Generative Image Steganography</h1>
                     <p>
-                        Advanced steganography solutions with cutting-edge
-                        technology and user-friendly design
+                        A university project exploring advanced steganography
+                        techniques with generative AI and modern mobile
+                        implementation
                     </p>
                 </div>
 
@@ -458,7 +524,7 @@
                             text-align: center;
                         "
                     >
-                        Welcome to the Future of Steganography
+                        Our Academic Project
                     </h2>
                     <p
                         style="
@@ -470,48 +536,51 @@
                             margin: 0 auto 40px;
                         "
                     >
-                        Discover our revolutionary steganography platform that
-                        combines security, performance, and ease of use. Explore
-                        interactive documentation, watch detailed
-                        demonstrations, and download our mobile application.
+                        This project combines cutting-edge steganography
+                        research with practical mobile application development.
+                        Explore our academic poster, watch our application
+                        demonstration, and experience the technology through our
+                        mobile demo application.
                     </p>
 
                     <div class="feature-grid">
                         <div class="feature-card">
                             <i class="fas fa-file-alt"></i>
-                            <h3>Interactive Documentation</h3>
+                            <h3>Research Poster</h3>
                             <p>
-                                Comprehensive project documentation with
-                                detailed technical specifications and
-                                implementation details.
+                                Our comprehensive academic poster detailing the
+                                theoretical foundation, methodology, and results
+                                of our steganography research.
                             </p>
                         </div>
                         <div class="feature-card">
                             <i class="fas fa-video"></i>
-                            <h3>Live Demonstration</h3>
+                            <h3>Application Demo</h3>
                             <p>
-                                Watch our application in action with
-                                step-by-step tutorials and real-world use cases.
+                                Live demonstration of our mobile application
+                                showcasing real-world implementation of
+                                generative image steganography.
                             </p>
                         </div>
                         <div class="feature-card">
                             <i class="fas fa-mobile-alt"></i>
-                            <h3>Mobile Application</h3>
+                            <h3>Demo Application</h3>
                             <p>
-                                Download our optimized Android application for
-                                seamless steganography on your mobile device.
+                                Interactive mobile demo allowing you to
+                                experience our steganography algorithms
+                                firsthand on Android devices.
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- PDF Page -->
-            <div id="pdf" class="page">
+            <!-- Poster Page -->
+            <div id="poster" class="page">
                 <div class="content-card">
                     <h2 class="section-title">
                         <i class="fas fa-file-pdf section-icon"></i>
-                        Project Documentation
+                        Academic Poster
                     </h2>
                     <p
                         style="
@@ -520,13 +589,14 @@
                             opacity: 0.9;
                         "
                     >
-                        Explore the complete technical documentation of our
-                        steganography project
+                        Our research poster presenting the theoretical
+                        background, methodology, and experimental results of the
+                        project
                     </p>
                     <div class="pdf-container">
                         <iframe
                             src="steganography poster.pdf"
-                            title="Steganography Project Documentation"
+                            title="Generative Image Steganography Research Poster"
                         >
                             <p
                                 style="
@@ -543,7 +613,8 @@
                                         text-decoration: none;
                                     "
                                 >
-                                    <i class="fas fa-download"></i> Download PDF
+                                    <i class="fas fa-download"></i> Download
+                                    Poster
                                 </a>
                             </p>
                         </iframe>
@@ -551,12 +622,12 @@
                 </div>
             </div>
 
-            <!-- Video Page -->
-            <div id="video" class="page">
+            <!-- Demo Page -->
+            <div id="demo" class="page">
                 <div class="content-card">
                     <h2 class="section-title">
                         <i class="fas fa-play section-icon"></i>
-                        Application Demo
+                        Application Demonstration
                     </h2>
                     <p
                         style="
@@ -565,8 +636,8 @@
                             opacity: 0.9;
                         "
                     >
-                        Watch how our steganography application works in
-                        real-time
+                        Watch our mobile application in action demonstrating the
+                        practical implementation of our steganography research
                     </p>
                     <div class="video-container" style="text-align: center">
                         <video
@@ -596,10 +667,11 @@
                                 margin: 0 auto;
                             "
                         >
-                            This comprehensive demonstration showcases the key
-                            features of our steganography application, including
-                            data embedding, extraction processes, and advanced
-                            security mechanisms.
+                            This demonstration video showcases the user
+                            interface, core functionality, and practical
+                            applications of our generative image steganography
+                            mobile application developed as part of our academic
+                            research.
                         </p>
                     </div>
                 </div>
@@ -610,28 +682,29 @@
                 <div class="content-card">
                     <h2 class="section-title">
                         <i class="fas fa-mobile-alt section-icon"></i>
-                        Download Mobile App
+                        Demo Application
                     </h2>
 
                     <div class="download-section">
                         <p class="download-description">
-                            Experience the full power of our steganography
-                            technology on your mobile device. Our Android
-                            application is optimized for performance, security,
-                            and user experience.
+                            Experience our steganography research through our
+                            interactive demo application. This Android app
+                            demonstrates the practical implementation of our
+                            academic work and allows hands-on exploration of
+                            generative image steganography techniques.
                         </p>
 
                         <div class="download-area">
                             <a href="myapp.apk" download class="download-btn">
                                 <i class="fas fa-download"></i>
-                                Download APK
+                                Download Demo APK
                             </a>
 
                             <div class="qr-code">
                                 <div class="qr-placeholder">
                                     <img
                                         src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://raw.githubusercontent.com/Steganographyproject/GenerativeImageSteganography/main/myapp.apk"
-                                        alt="QR Code for APK Download"
+                                        alt="QR Code for Demo APK Download"
                                         style="
                                             width: 100%;
                                             height: 100%;
@@ -641,59 +714,145 @@
                                     />
                                 </div>
                                 <div class="qr-label">
-                                    Scan QR Code to Download
+                                    Scan QR Code to Download Demo
                                 </div>
                             </div>
                         </div>
 
                         <div class="app-features">
-                            <h3>
-                                <i class="fas fa-star"></i> Application Features
-                            </h3>
+                            <h3><i class="fas fa-star"></i> Demo Features</h3>
                             <div class="features-grid">
                                 <div class="feature-item">
                                     <h4>
-                                        <i class="fas fa-shield-alt"></i>
-                                        Advanced Security
+                                        <i class="fas fa-flask"></i>
+                                        Research Implementation
                                     </h4>
                                     <p>
-                                        Military-grade encryption algorithms
-                                        ensure your data remains protected and
-                                        undetectable.
+                                        Direct implementation of our academic
+                                        research in generative image
+                                        steganography techniques.
                                     </p>
                                 </div>
                                 <div class="feature-item">
                                     <h4>
-                                        <i class="fas fa-bolt"></i> Lightning
-                                        Fast
+                                        <i class="fas fa-mobile-alt"></i>
+                                        Interactive Demo
                                     </h4>
                                     <p>
-                                        Optimized processing engine delivers
-                                        results in seconds, not minutes.
+                                        Hands-on experience with embedding and
+                                        extracting hidden data using generative
+                                        AI methods.
                                     </p>
                                 </div>
                                 <div class="feature-item">
                                     <h4>
-                                        <i class="fas fa-mobile-alt"></i> Mobile
-                                        Optimized
+                                        <i class="fas fa-graduation-cap"></i>
+                                        Educational Tool
                                     </h4>
                                     <p>
-                                        Designed specifically for Android
-                                        devices with intuitive touch controls.
+                                        Perfect for understanding steganography
+                                        concepts and exploring academic research
+                                        applications.
                                     </p>
                                 </div>
                                 <div class="feature-item">
                                     <h4>
-                                        <i class="fas fa-palette"></i> Modern
-                                        Interface
+                                        <i class="fas fa-code"></i>
+                                        Open Source
                                     </h4>
                                     <p>
-                                        Beautiful, responsive design that adapts
-                                        to your device and preferences.
+                                        Developed as part of academic research
+                                        with transparent methodology and
+                                        implementation.
                                     </p>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Page -->
+            <div id="team" class="page">
+                <div class="content-card">
+                    <h2 class="section-title">
+                        <i class="fas fa-users section-icon"></i>
+                        Project Team
+                    </h2>
+                    <p
+                        style="
+                            text-align: center;
+                            margin-bottom: 40px;
+                            opacity: 0.9;
+                            font-size: 1.1rem;
+                        "
+                    >
+                        Meet the team behind this generative image steganography
+                        research project
+                    </p>
+
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="avatar">AO</div>
+                            <h3>Ahmetcan Oğuz</h3>
+                            <p class="role">Team Member</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="avatar">YK</div>
+                            <h3>Yunus Emre Keleş</h3>
+                            <p class="role">Team Member</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="avatar">EY</div>
+                            <h3>Erdem Yağcı</h3>
+                            <p class="role">Team Member</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 50px">
+                        <h3
+                            style="
+                                text-align: center;
+                                margin-bottom: 30px;
+                                font-size: 1.8rem;
+                                opacity: 0.9;
+                            "
+                        >
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            Supervision
+                        </h3>
+                        <div style="display: flex; justify-content: center">
+                            <div
+                                class="team-member supervisor"
+                                style="max-width: 350px"
+                            >
+                                <div class="avatar">HA</div>
+                                <h3>Assoc. Prof. Dr. Harun Artuner</h3>
+                                <p class="role">Project Supervisor</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="
+                            margin-top: 50px;
+                            text-align: center;
+                            padding: 30px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border-radius: 16px;
+                        "
+                    >
+                        <h4 style="margin-bottom: 15px; font-size: 1.3rem">
+                            <i class="fas fa-university"></i> Academic Context
+                        </h4>
+                        <p style="opacity: 0.9; line-height: 1.6">
+                            This project was developed as part of our university
+                            coursework, exploring the intersection of artificial
+                            intelligence, cryptography, and mobile application
+                            development in the field of steganography.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -744,9 +903,10 @@
                 // Keyboard navigation
                 document.addEventListener("keydown", function (e) {
                     if (e.key === "1") showPage("home");
-                    if (e.key === "2") showPage("pdf");
-                    if (e.key === "3") showPage("video");
+                    if (e.key === "2") showPage("poster");
+                    if (e.key === "3") showPage("demo");
                     if (e.key === "4") showPage("download");
+                    if (e.key === "5") showPage("team");
                 });
 
                 // Mouse parallax effect
