@@ -2,10 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Generative Image Steganography</title>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+        />
         <style>
-            /* CSS kısmın aynen korunuyor */
             * {
                 margin: 0;
                 padding: 0;
@@ -24,146 +27,480 @@
                 overflow-x: hidden;
             }
 
-            .container {
-                max-width: 1400px;
-                margin: 0 auto;
-                padding: 40px;
+            /* Animated background particles */
+            .bg-animation {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: -1;
             }
 
+            .particle {
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                animation: float 6s ease-in-out infinite;
+            }
+
+            @keyframes float {
+                0%,
+                100% {
+                    transform: translateY(0px) rotate(0deg);
+                    opacity: 1;
+                }
+                50% {
+                    transform: translateY(-20px) rotate(180deg);
+                    opacity: 0.8;
+                }
+            }
+
+            /* Navigation */
+            .navigation {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 1000;
+                display: flex;
+                gap: 10px;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px);
+                border-radius: 50px;
+                padding: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .nav-btn {
+                background: transparent;
+                border: none;
+                color: rgba(255, 255, 255, 0.7);
+                padding: 12px 20px;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: 500;
+                font-size: 14px;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .nav-btn:hover {
+                background: rgba(255, 255, 255, 0.2);
+                color: #ffffff;
+                transform: translateY(-2px);
+            }
+
+            .nav-btn.active {
+                background: rgba(255, 255, 255, 0.3);
+                color: #ffffff;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Container */
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 40px 20px;
+            }
+
+            /* Page transitions */
             .page {
                 display: none;
                 min-height: calc(100vh - 80px);
-                animation: fadeIn 0.6s ease-out;
+                animation: fadeInUp 0.6s ease-out;
             }
 
             .page.active {
                 display: block;
             }
 
-            .navigation {
-                position: fixed;
-                top: 30px;
-                right: 30px;
-                z-index: 1000;
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Hero section */
+            .hero {
+                text-align: center;
+                padding: 80px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.5rem, 5vw, 4rem);
+                font-weight: 700;
+                margin-bottom: 20px;
+                background: linear-gradient(45deg, #ffffff, #e0e7ff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                line-height: 1.2;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+                opacity: 0.9;
+                max-width: 600px;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+
+            /* Content cards */
+            .content-card {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px);
+                border-radius: 24px;
+                padding: 40px;
+                margin: 20px 0;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 30px;
+                text-align: center;
                 display: flex;
+                align-items: center;
+                justify-content: center;
                 gap: 15px;
             }
 
-            .nav-btn {
-                background: rgba(255, 255, 255, 0.2);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                cursor: pointer;
+            .section-icon {
+                font-size: 3rem;
+                opacity: 0.9;
+            }
+
+            /* Feature grid */
+            .feature-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+                margin-top: 50px;
+            }
+
+            .feature-card {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 30px;
+                border-radius: 20px;
+                text-align: center;
                 transition: all 0.3s ease;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .feature-card:hover {
+                transform: translateY(-10px);
+                background: rgba(255, 255, 255, 0.15);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            }
+
+            .feature-card i {
+                font-size: 3rem;
+                margin-bottom: 20px;
+                color: #fbbf24;
+            }
+
+            .feature-card h3 {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
                 font-weight: 600;
+            }
+
+            .feature-card p {
+                opacity: 0.8;
+                line-height: 1.6;
+            }
+
+            /* Media containers */
+            .pdf-container,
+            .video-container {
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 16px;
+                padding: 20px;
+                margin: 30px 0;
+            }
+
+            .pdf-container iframe {
+                width: 100%;
+                height: 600px;
+                border: none;
+                border-radius: 12px;
+                background: white;
+            }
+
+            .video-container video {
+                width: 100%;
+                max-width: 800px;
+                height: auto;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            /* Download section */
+            .download-section {
+                text-align: center;
+            }
+
+            .download-description {
+                font-size: 1.1rem;
+                line-height: 1.8;
+                opacity: 0.9;
+                margin-bottom: 40px;
+                max-width: 700px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .download-area {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 50px;
+                margin: 50px 0;
+                flex-wrap: wrap;
+            }
+
+            .download-btn {
+                background: linear-gradient(45deg, #10b981, #059669);
+                color: white;
+                padding: 20px 40px;
+                border-radius: 50px;
                 text-decoration: none;
-                display: inline-block;
+                font-weight: 600;
+                font-size: 1.1rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 12px;
+                transition: all 0.3s ease;
+                border: none;
+                cursor: pointer;
+                box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
             }
 
-            .nav-btn:hover,
-            .nav-btn.active {
-                background: rgba(255, 255, 255, 0.3);
-                transform: translateY(-2px);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            .download-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
             }
 
-            /* ... (diğer CSS'lerin hepsi aynı şekilde kalıyor, çünkü sadece metinleri çevirdik) ... */
+            .download-btn i {
+                font-size: 1.2rem;
+            }
+
+            .qr-code {
+                text-align: center;
+            }
+
+            .qr-placeholder {
+                width: 200px;
+                height: 200px;
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 15px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .qr-pattern {
+                width: 160px;
+                height: 160px;
+                background:
+                    repeating-linear-gradient(
+                        0deg,
+                        #000,
+                        #000 3px,
+                        #fff 3px,
+                        #fff 6px
+                    ),
+                    repeating-linear-gradient(
+                        90deg,
+                        #000,
+                        #000 3px,
+                        #fff 3px,
+                        #fff 6px
+                    );
+                opacity: 0.8;
+            }
+
+            .qr-label {
+                font-size: 0.9rem;
+                opacity: 0.8;
+                margin-top: 10px;
+            }
+
+            .app-features {
+                margin-top: 50px;
+                padding: 40px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 20px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .app-features h3 {
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+
+            .features-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 25px;
+            }
+
+            .feature-item {
+                padding: 20px;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 12px;
+                border-left: 4px solid #10b981;
+            }
+
+            .feature-item h4 {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .feature-item p {
+                opacity: 0.8;
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            /* Responsive design */
+            @media (max-width: 768px) {
+                .navigation {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 50%;
+                    transform: translateX(50%);
+                    top: auto;
+                }
+
+                .nav-btn {
+                    padding: 10px 15px;
+                    font-size: 12px;
+                }
+
+                .hero {
+                    padding: 60px 0 40px;
+                }
+
+                .content-card {
+                    padding: 30px 20px;
+                    margin: 10px 0;
+                }
+
+                .download-area {
+                    flex-direction: column;
+                    gap: 30px;
+                }
+
+                .feature-grid {
+                    grid-template-columns: 1fr;
+                    gap: 20px;
+                }
+            }
         </style>
     </head>
     <body>
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
+        <!-- Animated background -->
+        <div class="bg-animation" id="bgAnimation"></div>
 
-        <div class="navigation">
-            <a href="#" class="nav-btn active" onclick="showPage('home')"
-                >Home</a
-            >
-            <a href="#" class="nav-btn" onclick="showPage('pdf')">PDF</a>
-            <a href="#" class="nav-btn" onclick="showPage('video')">Video</a>
-            <a href="#" class="nav-btn" onclick="showPage('download')"
-                >Download</a
-            >
-        </div>
+        <!-- Navigation -->
+        <nav class="navigation">
+            <a href="#" class="nav-btn active" onclick="showPage('home')">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="#" class="nav-btn" onclick="showPage('pdf')">
+                <i class="fas fa-file-pdf"></i> PDF
+            </a>
+            <a href="#" class="nav-btn" onclick="showPage('video')">
+                <i class="fas fa-play"></i> Video
+            </a>
+            <a href="#" class="nav-btn" onclick="showPage('download')">
+                <i class="fas fa-download"></i> Download
+            </a>
+        </nav>
 
         <div class="container">
             <!-- Home Page -->
             <div id="home" class="page active">
                 <div class="hero">
                     <h1>Generative Image Steganography</h1>
+                    <p>
+                        Advanced steganography solutions with cutting-edge
+                        technology and user-friendly design
+                    </p>
                 </div>
 
                 <div class="content-card">
-                    <div style="text-align: center">
-                        <h2 style="font-size: 2rem; margin-bottom: 30px">
-                            Welcome
-                        </h2>
-                        <p
-                            style="
-                                font-size: 1.2rem;
-                                line-height: 1.8;
-                                opacity: 0.9;
-                                max-width: 800px;
-                                margin: 0 auto;
-                            "
-                        >
-                            On this platform, you can explore our steganography
-                            project, watch the demo video, and download our
-                            mobile application. We offer the best experience
-                            with a modern design and user-friendly interface.
-                        </p>
+                    <h2
+                        style="
+                            font-size: 2rem;
+                            margin-bottom: 30px;
+                            text-align: center;
+                        "
+                    >
+                        Welcome to the Future of Steganography
+                    </h2>
+                    <p
+                        style="
+                            font-size: 1.1rem;
+                            line-height: 1.8;
+                            opacity: 0.9;
+                            text-align: center;
+                            max-width: 800px;
+                            margin: 0 auto 40px;
+                        "
+                    >
+                        Discover our revolutionary steganography platform that
+                        combines security, performance, and ease of use. Explore
+                        interactive documentation, watch detailed
+                        demonstrations, and download our mobile application.
+                    </p>
 
-                        <div
-                            style="
-                                display: grid;
-                                grid-template-columns: repeat(
-                                    auto-fit,
-                                    minmax(200px, 1fr)
-                                );
-                                gap: 30px;
-                                margin-top: 50px;
-                            "
-                        >
-                            <div style="text-align: center; padding: 20px">
-                                <div
-                                    style="font-size: 3rem; margin-bottom: 15px"
-                                >
-                                    📄
-                                </div>
-                                <h3>Interactive PDF</h3>
-                                <p style="opacity: 0.8; margin-top: 10px">
-                                    Explore the project document
-                                </p>
-                            </div>
-
-                            <div style="text-align: center; padding: 20px">
-                                <div
-                                    style="font-size: 3rem; margin-bottom: 15px"
-                                >
-                                    🎬
-                                </div>
-                                <h3>Demo Video</h3>
-                                <p style="opacity: 0.8; margin-top: 10px">
-                                    See the app in action
-                                </p>
-                            </div>
-
-                            <div style="text-align: center; padding: 20px">
-                                <div
-                                    style="font-size: 3rem; margin-bottom: 15px"
-                                >
-                                    📱
-                                </div>
-                                <h3>Mobile Application</h3>
-                                <p style="opacity: 0.8; margin-top: 10px">
-                                    Download the APK file
-                                </p>
-                            </div>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Interactive Documentation</h3>
+                            <p>
+                                Comprehensive project documentation with
+                                detailed technical specifications and
+                                implementation details.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-video"></i>
+                            <h3>Live Demonstration</h3>
+                            <p>
+                                Watch our application in action with
+                                step-by-step tutorials and real-world use cases.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h3>Mobile Application</h3>
+                            <p>
+                                Download our optimized Android application for
+                                seamless steganography on your mobile device.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -172,15 +509,24 @@
             <!-- PDF Page -->
             <div id="pdf" class="page">
                 <div class="content-card">
-                    <span class="section-icon">📄</span>
                     <h2 class="section-title">
-                        Steganography Project - Detailed Document
+                        <i class="fas fa-file-pdf section-icon"></i>
+                        Project Documentation
                     </h2>
-
+                    <p
+                        style="
+                            text-align: center;
+                            margin-bottom: 30px;
+                            opacity: 0.9;
+                        "
+                    >
+                        Explore the complete technical documentation of our
+                        steganography project
+                    </p>
                     <div class="pdf-container">
                         <iframe
                             src="steganography poster.pdf"
-                            title="Steganography Poster"
+                            title="Steganography Project Documentation"
                         >
                             <p
                                 style="
@@ -189,13 +535,16 @@
                                     text-align: center;
                                 "
                             >
-                                This browser does not support PDFs. To view the
-                                PDF, please download it:
+                                This browser does not support PDF viewing.
                                 <a
                                     href="steganography poster.pdf"
-                                    style="color: #4ecdc4"
-                                    >Download PDF</a
+                                    style="
+                                        color: #10b981;
+                                        text-decoration: none;
+                                    "
                                 >
+                                    <i class="fas fa-download"></i> Download PDF
+                                </a>
                             </p>
                         </iframe>
                     </div>
@@ -205,10 +554,21 @@
             <!-- Video Page -->
             <div id="video" class="page">
                 <div class="content-card">
-                    <span class="section-icon">🎬</span>
-                    <h2 class="section-title">Application Demo Video</h2>
-
-                    <div class="video-container">
+                    <h2 class="section-title">
+                        <i class="fas fa-play section-icon"></i>
+                        Application Demo
+                    </h2>
+                    <p
+                        style="
+                            text-align: center;
+                            margin-bottom: 30px;
+                            opacity: 0.9;
+                        "
+                    >
+                        Watch how our steganography application works in
+                        real-time
+                    </p>
+                    <div class="video-container" style="text-align: center">
                         <video
                             controls
                             preload="metadata"
@@ -226,19 +586,20 @@
                             </p>
                         </video>
                     </div>
-
                     <div style="text-align: center; margin-top: 30px">
                         <p
                             style="
                                 font-size: 1.1rem;
                                 opacity: 0.9;
                                 line-height: 1.6;
+                                max-width: 700px;
+                                margin: 0 auto;
                             "
                         >
-                            This video demonstrates how the steganography
-                            application works and its key features. You will see
-                            in detail how data is embedded into images and how
-                            this data is extracted.
+                            This comprehensive demonstration showcases the key
+                            features of our steganography application, including
+                            data embedding, extraction processes, and advanced
+                            security mechanisms.
                         </p>
                     </div>
                 </div>
@@ -247,121 +608,88 @@
             <!-- Download Page -->
             <div id="download" class="page">
                 <div class="content-card">
-                    <span class="section-icon">📱</span>
-                    <h2 class="section-title">Download the Mobile App</h2>
+                    <h2 class="section-title">
+                        <i class="fas fa-mobile-alt section-icon"></i>
+                        Download Mobile App
+                    </h2>
 
                     <div class="download-section">
                         <p class="download-description">
-                            Download our premium mobile app and enjoy the full
-                            experience on your device. Our app is optimized for
-                            performance and designed for excellence, enabling
-                            you to perform steganography tasks easily.
+                            Experience the full power of our steganography
+                            technology on your mobile device. Our Android
+                            application is optimized for performance, security,
+                            and user experience.
                         </p>
 
                         <div class="download-area">
                             <a href="myapp.apk" download class="download-btn">
-                                <span>📱</span>
+                                <i class="fas fa-download"></i>
                                 Download APK
                             </a>
 
                             <div class="qr-code">
-                                <div
-                                    style="
-                                        width: 200px;
-                                        height: 200px;
-                                        background: #f0f0f0;
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                        position: relative;
-                                    "
-                                >
-                                    <!-- QR Code will appear here -->
-                                    <div
+                                <div class="qr-placeholder">
+                                    <img
+                                        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://raw.githubusercontent.com/Steganographyproject/GenerativeImageSteganography/main/myapp.apk"
+                                        alt="QR Code for APK Download"
                                         style="
-                                            width: 160px;
-                                            height: 160px;
-                                            background:
-                                                repeating-linear-gradient(
-                                                    0deg,
-                                                    #000,
-                                                    #000 3px,
-                                                    #fff 3px,
-                                                    #fff 6px
-                                                ),
-                                                repeating-linear-gradient(
-                                                    90deg,
-                                                    #000,
-                                                    #000 3px,
-                                                    #fff 3px,
-                                                    #fff 6px
-                                                );
+                                            width: 100%;
+                                            height: 100%;
+                                            object-fit: contain;
+                                            border-radius: 12px;
                                         "
-                                    ></div>
-                                    <div
-                                        style="
-                                            position: absolute;
-                                            top: 50%;
-                                            left: 50%;
-                                            transform: translate(-50%, -50%);
-                                            background: #000;
-                                            color: white;
-                                            padding: 8px;
-                                            border-radius: 4px;
-                                            font-size: 12px;
-                                        "
-                                    >
-                                        QR Code
-                                    </div>
+                                    />
                                 </div>
-                                <div class="qr-label">Download via QR Code</div>
+                                <div class="qr-label">
+                                    Scan QR Code to Download
+                                </div>
                             </div>
                         </div>
 
-                        <div
-                            style="
-                                margin-top: 50px;
-                                padding: 30px;
-                                background: rgba(255, 255, 255, 0.1);
-                                border-radius: 15px;
-                            "
-                        >
-                            <h3 style="margin-bottom: 20px; font-size: 1.5rem">
-                                App Features:
+                        <div class="app-features">
+                            <h3>
+                                <i class="fas fa-star"></i> Application Features
                             </h3>
-                            <div
-                                style="
-                                    display: grid;
-                                    grid-template-columns: repeat(
-                                        auto-fit,
-                                        minmax(250px, 1fr)
-                                    );
-                                    gap: 20px;
-                                    text-align: left;
-                                "
-                            >
-                                <div>
-                                    <h4>🔒 Secure Steganography</h4>
-                                    <p style="opacity: 0.8; margin-top: 5px">
-                                        Advanced encryption algorithms
+                            <div class="features-grid">
+                                <div class="feature-item">
+                                    <h4>
+                                        <i class="fas fa-shield-alt"></i>
+                                        Advanced Security
+                                    </h4>
+                                    <p>
+                                        Military-grade encryption algorithms
+                                        ensure your data remains protected and
+                                        undetectable.
                                     </p>
                                 </div>
-                                <div>
-                                    <h4>⚡ Fast Processing</h4>
-                                    <p style="opacity: 0.8; margin-top: 5px">
-                                        Optimized performance
+                                <div class="feature-item">
+                                    <h4>
+                                        <i class="fas fa-bolt"></i> Lightning
+                                        Fast
+                                    </h4>
+                                    <p>
+                                        Optimized processing engine delivers
+                                        results in seconds, not minutes.
                                     </p>
                                 </div>
-                                <div>
-                                    <h4>📱 Mobile Friendly</h4>
-                                    <p style="opacity: 0.8; margin-top: 5px">
-                                        Works perfectly on Android devices
+                                <div class="feature-item">
+                                    <h4>
+                                        <i class="fas fa-mobile-alt"></i> Mobile
+                                        Optimized
+                                    </h4>
+                                    <p>
+                                        Designed specifically for Android
+                                        devices with intuitive touch controls.
                                     </p>
                                 </div>
-                                <div>
-                                    <h4>🎨 Modern Design</h4>
-                                    <p style="opacity: 0.8; margin-top: 5px">
-                                        User-friendly interface
+                                <div class="feature-item">
+                                    <h4>
+                                        <i class="fas fa-palette"></i> Modern
+                                        Interface
+                                    </h4>
+                                    <p>
+                                        Beautiful, responsive design that adapts
+                                        to your device and preferences.
                                     </p>
                                 </div>
                             </div>
@@ -372,35 +700,67 @@
         </div>
 
         <script>
+            // Page navigation
             function showPage(pageId) {
-                const pages = document.querySelectorAll(".page");
-                pages.forEach((page) => page.classList.remove("active"));
+                // Hide all pages
+                document.querySelectorAll(".page").forEach((page) => {
+                    page.classList.remove("active");
+                });
+
+                // Show selected page
                 document.getElementById(pageId).classList.add("active");
 
-                const navBtns = document.querySelectorAll(".nav-btn");
-                navBtns.forEach((btn) => btn.classList.remove("active"));
+                // Update navigation
+                document.querySelectorAll(".nav-btn").forEach((btn) => {
+                    btn.classList.remove("active");
+                });
                 event.target.classList.add("active");
 
+                // Smooth scroll to top
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
 
+            // Create animated background particles
+            function createParticles() {
+                const bgAnimation = document.getElementById("bgAnimation");
+                const particleCount = 50;
+
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement("div");
+                    particle.className = "particle";
+                    particle.style.left = Math.random() * 100 + "%";
+                    particle.style.top = Math.random() * 100 + "%";
+                    particle.style.animationDelay = Math.random() * 6 + "s";
+                    particle.style.animationDuration =
+                        Math.random() * 3 + 3 + "s";
+                    bgAnimation.appendChild(particle);
+                }
+            }
+
+            // Initialize on page load
             document.addEventListener("DOMContentLoaded", function () {
-                document.addEventListener("mousemove", function (e) {
-                    const shapes = document.querySelectorAll(".shape");
-                    const x = e.clientX / window.innerWidth;
-                    const y = e.clientY / window.innerHeight;
+                createParticles();
 
-                    shapes.forEach((shape, index) => {
-                        const speed = (index + 1) * 0.5;
-                        shape.style.transform = `translate(${x * speed * 15}px, ${y * speed * 15}px)`;
-                    });
-                });
-
+                // Keyboard navigation
                 document.addEventListener("keydown", function (e) {
                     if (e.key === "1") showPage("home");
                     if (e.key === "2") showPage("pdf");
                     if (e.key === "3") showPage("video");
                     if (e.key === "4") showPage("download");
+                });
+
+                // Mouse parallax effect
+                document.addEventListener("mousemove", function (e) {
+                    const particles = document.querySelectorAll(".particle");
+                    const x = e.clientX / window.innerWidth;
+                    const y = e.clientY / window.innerHeight;
+
+                    particles.forEach((particle, index) => {
+                        const speed = ((index % 5) + 1) * 0.5;
+                        const moveX = (x - 0.5) * speed * 20;
+                        const moveY = (y - 0.5) * speed * 20;
+                        particle.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                    });
                 });
             });
         </script>
