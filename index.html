@@ -416,15 +416,9 @@
             .team-member .avatar {
                 width: 100px;
                 height: 100px;
-                background: linear-gradient(45deg, #10b981, #059669);
                 border-radius: 50%;
+                overflow: hidden;
                 margin: 0 auto 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 2.5rem;
-                color: white;
-                font-weight: bold;
             }
 
             .team-member h3 {
@@ -446,7 +440,18 @@
             }
 
             .supervisor .avatar {
-                background: linear-gradient(45deg, #fbbf24, #f59e0b);
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin: 0 auto 20px;
+            }
+
+            .avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
             }
 
             /* Responsive design */
@@ -803,8 +808,8 @@
                             margin-bottom: 30px;
                         "
                     >
-                        View our Jupyter Notebook code used in the development
-                        process.
+                        View our Jupyter Notebook code used in the encoder and
+                        decoder AI Model's Training process.
                     </p>
                     <div class="pdf-container">
                         <iframe
@@ -836,19 +841,31 @@
 
                     <div class="team-grid">
                         <div class="team-member">
-                            <div class="avatar">AO</div>
+                            <div class="avatar">
+                                <img
+                                    src="AhmetcanOguz.jpeg"
+                                    alt="Ahmetcan Oğuz"
+                                />
+                            </div>
                             <h3>Ahmetcan Oğuz</h3>
                             <p class="role">Team Member</p>
                         </div>
 
                         <div class="team-member">
-                            <div class="avatar">YK</div>
+                            <div class="avatar">
+                                <img
+                                    src="YunusKeles.jpeg"
+                                    alt="Yunus Emre Keleş"
+                                />
+                            </div>
                             <h3>Yunus Emre Keleş</h3>
                             <p class="role">Team Member</p>
                         </div>
 
                         <div class="team-member">
-                            <div class="avatar">EY</div>
+                            <div class="avatar">
+                                <img src="ErdemYagci.jpeg" alt="Erdem Yağcı" />
+                            </div>
                             <h3>Erdem Yağcı</h3>
                             <p class="role">Team Member</p>
                         </div>
@@ -871,7 +888,12 @@
                                 class="team-member supervisor"
                                 style="max-width: 350px"
                             >
-                                <div class="avatar">HA</div>
+                                <div class="avatar">
+                                    <img
+                                        src="HarunArtuner.jpeg"
+                                        alt="Harun Artuner"
+                                    />
+                                </div>
                                 <h3>Assoc. Prof. Dr. Harun Artuner</h3>
                                 <p class="role">Project Supervisor</p>
                             </div>
