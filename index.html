@@ -255,6 +255,27 @@
                 height: 100%;
             }
 
+            .video-container.promo-video {
+                max-width: 960px;
+                width: 100%;
+                margin: 0 auto;
+                padding-top: 56.25%;
+                height: 0;
+                position: relative;
+                overflow: hidden;
+                border-radius: 16px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+
+            .video-container.promo-video video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 16px;
+            }
+
             /* Download section */
             .download-section {
                 text-align: center;
@@ -502,6 +523,9 @@
             <a href="#" class="nav-btn active" onclick="showPage('home')">
                 <i class="fas fa-home"></i> Home
             </a>
+            <a href="#" class="nav-btn" onclick="showPage('promo')">
+                <i class="fas fa-video"></i> Promo
+            </a>
             <a href="#" class="nav-btn" onclick="showPage('poster')">
                 <i class="fas fa-file-pdf"></i> Poster
             </a>
@@ -586,6 +610,43 @@
                                 firsthand on Android devices.
                             </p>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Promo Page -->
+            <div id="promo" class="page">
+                <div class="content-card">
+                    <h2 class="section-title">
+                        <i class="fas fa-video section-icon"></i>
+                        Project Introduction Video
+                    </h2>
+                    <p
+                        style="
+                            text-align: center;
+                            margin-bottom: 30px;
+                            opacity: 0.9;
+                        "
+                    >
+                        A brief video showcasing the background and scope of our
+                        generative image steganography project.
+                    </p>
+                    <div
+                        class="video-container promo-video"
+                        style="text-align: center"
+                    >
+                        <video controls preload="metadata">
+                            <source src="PromoVideo.mp4" type="video/mp4" />
+                            <p
+                                style="
+                                    color: white;
+                                    padding: 40px;
+                                    text-align: center;
+                                "
+                            >
+                                Your browser does not support the video tag.
+                            </p>
+                        </video>
                     </div>
                 </div>
             </div>
